@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_livecode
+      MYSQL_USER: user_livecode
+      MYSQL_PASSWORD: pass_livecode
+      MYSQL_DATABASE: db_livecode
+    links:
+      - livecode
+
+  livecode:
+    build: ./livecode-centos7-httpd
+    volumes:
+      - /vagrant/livecode-centos7-httpd/html:/var/www/html
+
+  proxy:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /vagrant/nginx/sites-enabled:/etc/nginx/sites-enabled
+    links:
+      - livecode
