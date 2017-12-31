@@ -10,13 +10,19 @@ services:
       MYSQL_USER: user_livecode
       MYSQL_PASSWORD: pass_livecode
       MYSQL_DATABASE: db_livecode
-    links:
-      - livecode
+    networks:
+      - backend
+    volumes:
+      - /vagrant/user-data/mariadb/db-src:/docker-entrypoint-initdb.d
+      - /vagrant/user-data/mariadb/db-data:/var/lib/mysql
 
   livecode:
     build: ./livecode-centos7-httpd
     volumes:
-      - /vagrant/livecode-centos7-httpd/html:/var/www/html
+      - /vagrant/user-data/html:/var/www/html
+    networks:
+      - frontend
+      - backend
 
   proxy:
     build: ./nginx
@@ -24,5 +30,9 @@ services:
       - "80:80"
     volumes:
       - /vagrant/nginx/sites-enabled:/etc/nginx/sites-enabled
-    links:
-      - livecode
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
