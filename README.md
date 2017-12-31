@@ -24,7 +24,9 @@ Optional: [Vagrant](https://www.vagrantup.com/)
 
 Clone the repository `git clone` and change into the directory
 
-Add your LiveCode to the folder `livecode-centos7-httpd/html` (you may need to create the folder `html`)
+Add your LiveCode to the folder `user-data/html`
+
+Add your database .sql (if required) to the folder `user-data/mariadb/db-src`
 
 Build the containers `docker-compose build`
 
@@ -37,7 +39,9 @@ Open [http://127.0.0.1](http://127.0.0.1) in your browser
 
 Clone the repository `git clone` and change into the directory
 
-Add your LiveCode to the folder `livecode-centos7-httpd/html` (you may need to create the folder `html`)
+Add your LiveCode to the folder `user-data/html`
+
+Add your database .sql (if required) to the folder `user-data/mariadb/db-src`
 
 Start the Vagrant box `vagrant up`
 
