@@ -13,8 +13,9 @@ services:
     networks:
       - backend
     volumes:
-      - /vagrant/user-data/mariadb/db-src:/docker-entrypoint-initdb.d
       - /vagrant/user-data/mariadb/db-data:/var/lib/mysql
+      - /vagrant/user-data/mariadb/db-src:/docker-entrypoint-initdb.d
+    container_name: livecode-db
 
   livecode:
     build: ./livecode-centos7-httpd
@@ -23,6 +24,7 @@ services:
     networks:
       - frontend
       - backend
+    container_name: livecode-app
 
   proxy:
     build: ./nginx
@@ -32,6 +34,7 @@ services:
       - /vagrant/nginx/sites-enabled:/etc/nginx/sites-enabled
     networks:
       - frontend
+    container_name: livecode-proxy
 
 networks:
   frontend:
