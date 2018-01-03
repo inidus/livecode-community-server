@@ -11,18 +11,20 @@ services:
       MYSQL_PASSWORD: pass_livecode
       MYSQL_DATABASE: db_livecode
     networks:
-      - backend
+      - livecode-db
     volumes:
+      - db-data:/var/lib/mysql
       - ./user-data/mariadb/db-src:/docker-entrypoint-initdb.d
-      - ./user-data/mariadb/db-data:/var/lib/mysql
+    container_name: livecode-db
 
   livecode:
     build: ./livecode-centos7-httpd
     volumes:
       - ./user-data/html:/var/www/html
     networks:
-      - frontend
-      - backend
+      - livecode-web
+      - livecode-db
+    container_name: livecode-app
 
   proxy:
     build: ./nginx
@@ -31,8 +33,12 @@ services:
     volumes:
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
     networks:
-      - frontend
+      - livecode-web
+    container_name: livecode-proxy
 
 networks:
-  frontend:
-  backend:
+  livecode-db:
+  livecode-web:
+
+volumes:
+  db-data:
