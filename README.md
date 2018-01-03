@@ -47,9 +47,10 @@ Start the Vagrant box `vagrant up`
 
 Open [http://192.168.50.100](http://192.168.50.100) in your browser. Vagrant will also create a hosts entry for livecode.local (subject to plugin compatability) so [http://livecode.local](livecode.local) should also work in your browser.
 
-### Customizing the containers
+### MariaDB Container
 
-Set your own database details for the MariaDB container by modifying the docker-compose.yml / docker-compose-vagrant.yml files.
+#### Config
+Configure the MariaDB container by modifying the `docker-compose.yml` / `docker-compose-vagrant.yml` files.
 
 ```
 MYSQL_ROOT_PASSWORD: root_livecode
@@ -57,6 +58,15 @@ MYSQL_USER: user_livecode
 MYSQL_PASSWORD: pass_livecode
 MYSQL_DATABASE: db_livecode
 ```
+#### Persistence
+
+A volume `db-data` is defined and mounted at `/var/lib/mysql`
+
+#### Initialisation
+
+The directory `./user-data/mariadb/db-src` is used for `/docker-entrypoint-initdb.d`
+
+Place MairaDB/MySQL dump/create files with the suffix .sql in `./user-data/mariadb/db-src` for automagical execution on container initialisation.
 
 ## Contributing
 
