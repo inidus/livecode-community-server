@@ -10,6 +10,8 @@ This repo provides LiveCode Community Server running as a Docker multi-container
   - Official build of MariaDB, the community-developed fork of MySQL.
 - nginx
   - Official build of Nginx.
+- nginx-filebeat
+  - Example showing shipping Nginx logs to ELK with Filebeat
 
 ## Getting Started
 These instructions will get you a LiveCode Community Server environment up and running on your local machine for development and testing purposes.
@@ -47,9 +49,9 @@ Start the Vagrant box `vagrant up`
 
 Open [http://192.168.50.100](http://192.168.50.100) in your browser. Vagrant will also create a hosts entry for livecode.local (subject to plugin compatability) so [http://livecode.local](livecode.local) should also work in your browser.
 
-### MariaDB Container
+## Container settings
 
-#### Config
+### MariaDB
 Configure the MariaDB container by modifying the `docker-compose.yml` / `docker-compose-vagrant.yml` files.
 
 ```
@@ -70,7 +72,7 @@ Place MairaDB/MySQL dump/create files with the suffix .sql in `./user-data/maria
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
