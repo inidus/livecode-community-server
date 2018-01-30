@@ -28,7 +28,8 @@ services:
     container_name: livecode-app
 
   proxy:
-    build: ./nginx-filebeat
+    build: ./nginx          # If using Filebeat to ship logs to ELK
+    #build: ./nginx-filebeat # If using Filebeat to ship logs to ELK
     ports:
       - "80:80"
     volumes:
