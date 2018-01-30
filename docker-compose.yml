@@ -10,6 +10,7 @@ services:
       MYSQL_USER: user_livecode
       MYSQL_PASSWORD: pass_livecode
       MYSQL_DATABASE: db_livecode
+      MYSQL_ROOT_HOST: "%"
     networks:
       - livecode-db
     volumes:
@@ -27,7 +28,7 @@ services:
     container_name: livecode-app
 
   proxy:
-    build: ./nginx
+    build: ./nginx-filebeat
     ports:
       - "80:80"
     volumes:
