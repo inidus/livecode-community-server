@@ -1,22 +1,23 @@
+# Dockerfile for LiveCode Community Server on Centos 7 with Apache
 FROM centos:7
-MAINTAINER The CentOS Project <cloud-ops@centos.org>
-LABEL Vendor="CentOS" \
-      License=GPLv2 \
-      Version=2.4.6-40
 
+LABEL com.inidus.version="0.0.1" \
+      vendor="Inidus Limited" \
+      description="LiveCode Server CE on Centos 7 with Apache"
+
+ENV LIVECODE_VER=8_1_6
+ENV LIVECODE_ZIP=LiveCodeCommunityServer-8_1_6-Linux-x86_64.zip
 
 RUN yum -y --setopt=tsflags=nodocs update && \
-    yum -y --setopt=tsflags=nodocs install httpd && \
-    yum -y --setopt=tsflags=nodocs install glibc.i686 && \
-    yum -y --setopt=tsflags=nodocs install libgcc.i686 && \
-    yum -y --setopt=tsflags=nodocs install wget curl unzip && \
+    yum -y --setopt=tsflags=nodocs install httpd wget curl unzip glibc.i686 libgcc.i686 && \
     yum clean all && \
     rm -rf /var/cache/yum
 
 RUN mkdir -p /usr/local/livecode && cd /usr/local/livecode && \
-    wget "http://livecodestatic.com/downloads/livecode/8_1_6/LiveCodeCommunityServer-8_1_6-Linux-x86_64.zip" && \
-    unzip LiveCodeCommunityServer-8_1_6-Linux-x86_64.zip && \
-    chmod 755 livecode-community-server
+    wget -q "http://livecodestatic.com/downloads/livecode/${LIVECODE_VER}/${LIVECODE_ZIP}" && \
+    unzip ${LIVECODE_ZIP} && \
+    chmod 755 livecode-community-server && \
+    rm ${LIVECODE_ZIP}
 
 EXPOSE 8080
 
@@ -28,7 +29,7 @@ ENV APACHE_LOG_DIR /var/log/httpd
 ENV APACHE_RUN_DIR=/var/run/httpd
 
 # Simple startup script to avoid some issues observed with container restart
-ADD run-httpd.sh /run-httpd.sh
+COPY run-httpd.sh /run-httpd.sh
 RUN chmod -v +x /run-httpd.sh
 
 CMD ["/run-httpd.sh"]
