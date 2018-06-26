@@ -1,44 +1,37 @@
 version: '3.1'
 
+networks:
+  livecode:
+
 services:
 
   db:
     image: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_livecode
-      MYSQL_USER: user_livecode
-      MYSQL_PASSWORD: pass_livecode
-      MYSQL_DATABASE: db_livecode
-    networks:
-      - livecode-db
+      MYSQL_ROOT_PASSWORD: livecode
+      MYSQL_USER: livecodeuser
+      MYSQL_PASSWORD: livecode
+      MYSQL_DATABASE: livecode
     volumes:
-      - db-data:/var/lib/mysql
+      - ./user-data/mariadb/db-data:/var/lib/mysql
       - ./user-data/mariadb/db-src:/docker-entrypoint-initdb.d
-    container_name: livecode-db
+    networks:
+      - livecode
 
   livecode:
     build: ./livecode-centos7-httpd
     volumes:
       - ./user-data/html:/var/www/html
     networks:
-      - livecode-web
-      - livecode-db
-    container_name: livecode-app
+      - livecode
 
   proxy:
-    build: ./nginx
+    image: nginx
     ports:
       - "80:80"
     volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
     networks:
-      - livecode-web
-    container_name: livecode-proxy
-
-networks:
-  livecode-db:
-  livecode-web:
-
-volumes:
-  db-data:
+      - livecode
