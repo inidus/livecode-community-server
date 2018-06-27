@@ -9,7 +9,7 @@ ENV LIVECODE_VER=8_1_6
 ENV LIVECODE_ZIP=LiveCodeCommunityServer-8_1_6-Linux-x86_64.zip
 
 RUN yum -y --setopt=tsflags=nodocs update && \
-    yum -y --setopt=tsflags=nodocs install httpd wget curl unzip glibc.i686 libgcc.i686 && \
+    yum -y --disableplugin=fastestmirror --setopt=tsflags=nodocs install httpd wget curl unzip glibc.i686 libgcc.i686 && \
     yum clean all && \
     rm -rf /var/cache/yum
 

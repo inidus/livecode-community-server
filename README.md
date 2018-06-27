@@ -67,7 +67,7 @@ Place MairaDB/MySQL dump/create files with the suffix .sql in `./user-data/maria
 
 #### Persistence
 
-The path `./user-data/mariadb/db-data` is defined and mounted at `/var/lib/mysql`
+The volume db-data is defined and mounted at `/var/lib/mysql`
 
 ## Contributing
 

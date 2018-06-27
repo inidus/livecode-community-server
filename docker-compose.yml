@@ -3,6 +3,9 @@ version: '3.1'
 networks:
   livecode:
 
+volumes:
+  db-data:
+
 services:
 
   db:
@@ -13,8 +16,9 @@ services:
       MYSQL_USER: livecodeuser
       MYSQL_PASSWORD: livecode
       MYSQL_DATABASE: livecode
+      MYSQL_ROOT_HOST: "%"
     volumes:
-      - ./user-data/mariadb/db-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
       - ./user-data/mariadb/db-src:/docker-entrypoint-initdb.d
     networks:
       - livecode
