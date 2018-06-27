@@ -4,11 +4,11 @@ LiveCode Community Server running as a CGI handler within an Apache web server e
 
 ## Docker
 
-Build the image `docker build -t local/livecode-centos7-httpd:latest .`
+Build the image `docker build -t livecode-centos7-httpd:latest .`
 
 Add your LiveCode to the folder `livecode-centos7-httpd/html` (you may need to create the folder `html`)
 
-Run the container `docker run --rm --name livecode -p 8080:80 local/livecode-centos7-httpd:latest`
+Run the container `docker run --rm --name livecode -p 8080:80 livecode-centos7-httpd:latest`
 
 Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser
 
@@ -18,6 +18,6 @@ Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser
 
 ## Notes
 
-`docker build --rm -t local/livecode-centos7-httpd .`
+`docker build --rm -t livecode-centos7-httpd .`
 
-`docker run -dit --name livecode -p 8080:80 local/livecode-centos7-httpd`
+`docker run -dit --name livecode -p 8080:80 livecode-centos7-httpd`

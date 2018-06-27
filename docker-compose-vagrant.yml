@@ -1,46 +1,41 @@
 version: '3.1'
 
+networks:
+  livecode:
+
+volumes:
+  db-data:
+
 services:
 
   db:
     image: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_livecode
-      MYSQL_USER: user_livecode
-      MYSQL_PASSWORD: pass_livecode
-      MYSQL_DATABASE: db_livecode
+      MYSQL_ROOT_PASSWORD: livecode
+      MYSQL_USER: livecodeuser
+      MYSQL_PASSWORD: livecode
+      MYSQL_DATABASE: livecode
       MYSQL_ROOT_HOST: "%"
-    networks:
-      - livecode-db
     volumes:
       - db-data:/var/lib/mysql
       - /vagrant/user-data/mariadb/db-src:/docker-entrypoint-initdb.d
-    container_name: livecode-db
+    networks:
+      - livecode
 
   livecode:
     build: ./livecode-centos7-httpd
     volumes:
       - /vagrant/user-data/html:/var/www/html
     networks:
-      - livecode-web
-      - livecode-db
-    container_name: livecode-app
+      - livecode
 
   proxy:
-    build: ./nginx          # If using Filebeat to ship logs to ELK
-    #build: ./nginx-filebeat # If using Filebeat to ship logs to ELK
+    image: nginx
     ports:
       - "80:80"
     volumes:
+      - /vagrant/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /vagrant/nginx/sites-enabled:/etc/nginx/sites-enabled
     networks:
-      - livecode-web
-    container_name: livecode-proxy
-
-networks:
-  livecode-db:
-  livecode-web:
-
-volumes:
-  db-data:
+      - livecode

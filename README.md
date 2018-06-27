@@ -47,7 +47,7 @@ Add your database .sql (if required) to the folder `user-data/mariadb/db-src`
 
 Start the Vagrant box `vagrant up`
 
-Open [http://192.168.50.100](http://192.168.50.100) in your browser. Vagrant will also create a hosts entry for livecode.local (subject to plugin compatability) so [http://livecode.local](livecode.local) should also work in your browser.
+Open [http://192.168.50.100](http://192.168.50.100) in your browser. Vagrant will also create a hosts entry for livecode.local (subject to plugin compatability) so [http://livecode.local](http://livecode.local) should also work in your browser.
 
 ## Container settings
 
@@ -55,14 +55,11 @@ Open [http://192.168.50.100](http://192.168.50.100) in your browser. Vagrant wil
 Configure the MariaDB container by modifying the `docker-compose.yml` / `docker-compose-vagrant.yml` files.
 
 ```
-MYSQL_ROOT_PASSWORD: root_livecode
-MYSQL_USER: user_livecode
-MYSQL_PASSWORD: pass_livecode
-MYSQL_DATABASE: db_livecode
+MYSQL_ROOT_PASSWORD: livecode
+MYSQL_USER: livecodeuser
+MYSQL_PASSWORD: livecode
+MYSQL_DATABASE: livecode
 ```
-#### Persistence
-
-A volume `db-data` is defined and mounted at `/var/lib/mysql`
 
 #### Initialisation
 
@@ -70,9 +67,13 @@ The directory `./user-data/mariadb/db-src` is used for `/docker-entrypoint-initd
 
 Place MairaDB/MySQL dump/create files with the suffix .sql in `./user-data/mariadb/db-src` for automagical execution on container initialisation.
 
+#### Persistence
+
+The volume db-data is defined and mounted at `/var/lib/mysql`
+
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING](CONTRIBUTING) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
@@ -88,3 +89,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 * [DevBandit](https://github.com/DevBandit)'s blog about [vagrant-and-docker](http://devbandit.com/2015/05/29/vagrant-and-docker.html).
 * [Techstrategies](https://github.com/techstrategies/) for [docker-livecode](https://github.com/techstrategies/docker-livecode)
+* [leighmcculloch](https://github.com/leighmcculloch) for  [vagrant-docker-compose](https://github.com/leighmcculloch/vagrant-docker-compose).
+* [devopsgroup-io](https://github.com/devopsgroup-io) for  [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager).
